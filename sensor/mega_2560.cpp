@@ -2,7 +2,6 @@
 #define DHTTYPE DHT11
 #define DHTPIN 4
 DHT dht(DHTPIN, DHTTYPE);
-
 #include <Wire.h>
 #include <Adafruit_INA219.h>
 Adafruit_INA219 ina219;
@@ -36,14 +35,14 @@ void loop() {
   getDUST();
 
   sensor_start();
-  sensor("temp", t);
-  sensor("humi", h);
-  sensor("cds", c);
-  sensor("Volt", V);
-  sensor("mA", mA);
-  sensor("Dust", d);
+  sensor(t);
+  sensor(h);
+  sensor(c);
+  sensor(V);
+  sensor(mA);
+  sensor(d);
   sensor_end();
-  send_sensor(10000);
+  send_sensor(3000);
 }
 
 void getDHT() {
@@ -88,9 +87,8 @@ void getVOLT() {
 
 
 void sensor_start() { str_sensor = "!,"; }
-void sensor(String key, String value) {
+void sensor(String value) {
   if ( value.length() > 0 ) {
-    str_sensor += key; str_sensor += ":"; str_sensor += ",";
     str_sensor += value; str_sensor += ",";
   } else if ( value.length() == 0 ) {}
 }
